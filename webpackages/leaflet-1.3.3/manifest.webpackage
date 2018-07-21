@@ -1,0 +1,30 @@
+{
+  "name": "leaflet-1.3.3",
+  "groupId": "",
+  "version": "0.1.0-SNAPSHOT",
+  "modelVersion": "10.0.0",
+  "docType": "webpackage",
+  "author": {
+    "name": "Edwin Gamboa",
+    "email": "edwingamboa355@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": [],
+  "man": [],
+  "artifacts": {
+    "apps": [],
+    "elementaryComponents": [],
+    "compoundComponents": [],
+    "utilities": [
+      {
+        "artifactId": "leaflet",
+        "description": "Wrapper for leaflet-1.3.3. An open-source JavaScript library for mobile-friendly interactive maps. See: https://leafletjs.com/reference-1.3.2.html",
+        "resources": [
+          "leaflet.css",
+          "leaflet.js"
+        ],
+        "dependencies": []
+      }
+    ]
+  }
+}
