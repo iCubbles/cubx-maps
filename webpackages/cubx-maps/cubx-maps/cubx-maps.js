@@ -4,7 +4,10 @@
 
   CubxComponent({
     is: 'cubx-maps',
-    _currentMarkers: [],
+    _currentElements: {
+      markers: [],
+      circles: []
+    },
 
     /**
      * Manipulate an element’s local DOM when the element is created.
@@ -75,56 +78,68 @@
      *  Observe the Cubbles-Component-Model: If value for slot 'markers' has changed ...
      */
     modelMarkersChanged: function (markers) {
-      if (this._isValidMarkersSlotValue(markers)) {
-        if (markers.hasOwnProperty('clearCurrentMarkers') && markers.clearCurrentMarkers === true) {
-          this._clearCurrentMarkers();
+      this._addElementsToMap(markers, 'marker');
+    },
+
+    _addElementsToMap: function (elements, type) {
+      if (this._isValidMapElementSlotValue(elements, type)) {
+        if (elements.hasOwnProperty('clearCurrent') && elements.clearCurrent === true) {
+          this._clearElementsOfAType(type);
         }
-        markers.list.forEach(function (marker) {
-          this._addMarkerToMap(marker);
+        elements.list.forEach(function (marker) {
+          this._addMapElement(marker, type);
         }.bind(this));
       } else {
         console.error(
-          'The provided marker is not valid.',
-          'It should be like: {"list": [], "clearCurrentMarkers": (optional)}.',
-          markers
+          'The provided elements value is not valid.',
+          'It should be like: {"list": [], "clearCurrent": (optional)}.',
+          elements
         );
       }
     },
 
-    _addMarkerToMap: function (marker) {
-      if (this._isValidMarkerValue(marker)) {
-        var lMarker = L.marker(marker.latlng, marker.options);
-        if (marker.hasOwnProperty('popUpInnerHtml') && typeof marker.popUpInnerHtml === 'string') {
-          lMarker.bindPopup(marker.popUpInnerHtml);
+    _addMapElement: function (element, type) {
+      if (this._isValidElementValue(element, type)) {
+        var lElement = L.marker(element.latlng, element.options);
+        if (element.hasOwnProperty('popUpInnerHtml') && typeof element.popUpInnerHtml === 'string') {
+          lElement.bindPopup(element.popUpInnerHtml);
         }
-        lMarker.addTo(this.map);
-        this._currentMarkers.push(lMarker);
-      } else {
-        console.error(
-          'The provided marker is not valid.',
-          'It should be like: {"latlng": , "popUpInnerHtml": (optional), "options": (optional)}.',
-          'See https://leafletjs.com/reference-1.3.2.html#marker',
-          marker
-        );
+        lElement.addTo(this.map);
+        this._getListOfElementType(type).push(lElement);
       }
     },
-    _clearCurrentMarkers: function () {
-      this._currentMarkers.forEach(function (marker) {
-        marker.remove();
+
+    _createElementOfAType: function (type, element) {
+      switch (type) {
+        case 'marker': return L.marker(element.latlng, element.options);
+      }
+    },
+
+    _clearElementsOfAType: function (type) {
+      var elementsList = this._getListOfElementType(type);
+      elementsList.forEach(function (element) {
+        element.remove();
       });
-      this._currentMarkers = [];
+      elementsList = [];
     },
 
-    _isValidMarkersSlotValue: function (markers) {
-      return typeof markers === 'object' && markers.hasOwnProperty('list');
+    _isValidMapElementSlotValue: function (elements, type) {
+      switch (type) {
+        case 'marker': return typeof elements === 'object' && elements.hasOwnProperty('list');
+        default: return false;
+      }
     },
 
-    _isValidMarkerValue: function (marker) {
+    _isValidElementValue: function (marker) {
       return typeof marker === 'object' && marker.hasOwnProperty('latlng');
     },
 
     _isValidTaleLayerValue: function (tileLayer) {
       return typeof tileLayer === 'object' && tileLayer.hasOwnProperty('url');
+    },
+
+    _getListOfElementType: function (type) {
+      return this._currentElements[type + 's'];
     }
   });
 }());
