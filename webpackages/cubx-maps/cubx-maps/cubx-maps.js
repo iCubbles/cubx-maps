@@ -8,7 +8,8 @@
       markers: [],
       circles: [],
       polygons: [],
-      polylines: []
+      polylines: [],
+      rectangles: []
     },
 
     /**
@@ -88,6 +89,13 @@
       this._addElementsToMap(polylines, 'polyline');
     },
 
+    /**
+     *  Observe the Cubbles-Component-Model: If value for slot 'rectangles' has changed ...
+     */
+    modelRectanglesChanged: function (rectangles) {
+      this._addElementsToMap(rectangles, 'rectangle');
+    },
+
     _addElementsToMap: function (elements, type) {
       if (this._isValidMapElementSlotValue(elements, type)) {
         if (elements.hasOwnProperty('clearCurrent') && elements.clearCurrent === true) {
@@ -114,13 +122,30 @@
           }
           lElement.addTo(this.map);
           this._getListOfElementType(type).push(lElement);
+        } else {
+          console.error(
+            'The provided', type, 'could not be created.',
+            element
+          );
         }
       } else {
         console.error(
-          'The provided', type, ' could not be created.',
-          element
+          'The provided', type, 'is not valid.',
+          'It should be like: ' + this._validTypeStringSample(type),
+          'Given:', element
         );
       }
+    },
+
+    _validTypeStringSample: function (type) {
+      var prefix;
+      switch (type) {
+        case 'polyline':
+        case 'polygon': prefix = '{ "latlngs": [[lat, lng], ... ,[lat, lng]]'; break;
+        case 'rectangle': prefix = '{ "bounds": [[lat, lng], [lat, lng]]'; break;
+        default: prefix = '{ "latlng": [lat, lng]';
+      }
+      return prefix + ', "options": { "key": value ... }, "popUpInnerHtml": "code" }. "options" and "popUpInnerHtml" are optional.';
     },
 
     _createLElementOfAType: function (type, element) {
@@ -129,6 +154,7 @@
         case 'circle': return L.circle(element.latlng, element.options);
         case 'polygon': return L.polygon(element.latlngs, element.options);
         case 'polyline': return L.polyline(element.latlngs, element.options);
+        case 'rectangle': return L.rectangle(element.bounds, element.options);
         default: return null;
       }
     },
@@ -149,6 +175,7 @@
       switch (type) {
         case 'polyline':
         case 'polygon': return typeof element === 'object' && element.hasOwnProperty('latlngs');
+        case 'rectangle': return typeof element === 'object' && element.hasOwnProperty('bounds');
         default: return typeof element === 'object' && element.hasOwnProperty('latlng');
       }
     },

@@ -103,6 +103,14 @@
               "input"
             ],
             "description": "JSON object containing the list of polylines to be added and saying if current polylines should be removed: {\"list\": [{\"latlngs\": array, \"options\": object, \"popUpInnerHtml\": string}, ...], \"clearCurrent\": boolean}. See https://leafletjs.com/reference-1.3.2.html#marker"
+          },
+          {
+            "slotId": "rectangles",
+            "type": "object",
+            "direction": [
+              "input"
+            ],
+            "description": "JSON object containing the list of rectangles to be added and saying if current rectangles should be removed: {\"list\": [{\"bounds\": array, \"options\": object, \"popUpInnerHtml\": string}, ...], \"clearCurrent\": boolean}. See https://leafletjs.com/reference-1.3.2.html#marker"
           }
         ]
       }
