@@ -6,7 +6,8 @@
     is: 'cubx-maps',
     _currentElements: {
       markers: [],
-      circles: []
+      circles: [],
+      polygons: []
     },
 
     /**
@@ -38,12 +39,6 @@
      */
     contextReady: function () {
       /*
-      var circle = L.circle([51.508, -0.11], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 500
-      }).addTo(mymap);
       var polygon = L.polygon([
         [51.509, -0.08],
         [51.503, -0.06],
@@ -88,6 +83,13 @@
       this._addElementsToMap(circles, 'circle');
     },
 
+    /**
+     *  Observe the Cubbles-Component-Model: If value for slot 'polygons' has changed ...
+     */
+    modelPolygonsChanged: function (polygons) {
+      this._addElementsToMap(polygons, 'polygon');
+    },
+
     _addElementsToMap: function (elements, type) {
       if (this._isValidMapElementSlotValue(elements, type)) {
         if (elements.hasOwnProperty('clearCurrent') && elements.clearCurrent === true) {
@@ -127,6 +129,7 @@
       switch (type) {
         case 'marker': return L.marker(element.latlng, element.options);
         case 'circle': return L.circle(element.latlng, element.options);
+        case 'polygon': return L.polygon(element.latlngs, element.options);
         default: return null;
       }
     },
@@ -143,8 +146,11 @@
       return typeof elements === 'object' && elements.hasOwnProperty('list');
     },
 
-    _isValidElementValue: function (marker) {
-      return typeof marker === 'object' && marker.hasOwnProperty('latlng');
+    _isValidElementValue: function (element, type) {
+      switch (type) {
+        case 'polygon': return typeof element === 'object' && element.hasOwnProperty('latlngs');
+        default: return typeof element === 'object' && element.hasOwnProperty('latlng');
+      }
     },
 
     _isValidTaleLayerValue: function (tileLayer) {
