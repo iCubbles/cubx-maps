@@ -74,11 +74,11 @@
           },
           {
             "slotId": "markers",
-            "type": "array",
+            "type": "object",
             "direction": [
               "input"
             ],
-            "description": "JSON object containing the list of markers and saying if currentMarkers should be removed: {\"list\": [{\"latlng\": array|object, \"options\": object, \"popUpInnerHtml\": string}, ...], \"clearCurrentMarkers\": boolean}. See https://leafletjs.com/reference-1.3.2.html#marker"
+            "description": "JSON object containing the list of markers to be added and saying if currentMarkers should be removed: {\"list\": [{\"latlng\": array|object, \"options\": object, \"popUpInnerHtml\": string}, ...], \"clearCurrent\": boolean}. See https://leafletjs.com/reference-1.3.2.html#marker"
           }
         ]
       }
