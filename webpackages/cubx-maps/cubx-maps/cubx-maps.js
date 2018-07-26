@@ -4,6 +4,7 @@
 
   CubxComponent({
     is: 'cubx-maps',
+    _currentMarkers: [],
 
     /**
      * Manipulate an element’s local DOM when the element is created.
@@ -72,8 +73,51 @@
       if (this._isValidTaleLayerValue(tileLayer)) {
         L.tileLayer(tileLayer.url, tileLayer.options).addTo(this.map);
       } else {
-        console.error('The provided tileLayer is no valid. It should be like: {"url": , "options": (optional)}.');
+        console.error('The provided tileLayer is not valid. It should be like: {"url": , "options": (optional)}.',
+          'See https://leafletjs.com/reference-1.3.2.html#tilelayer');
       }
+    },
+
+    /**
+     *  Observe the Cubbles-Component-Model: If value for slot 'markers' has changed ...
+     */
+    modelMarkersChanged: function (markers) {
+      if (this._isValidMarkersSlotValue(markers)) {
+        if (markers.hasOwnProperty('clearCurrentMarkers') && markers.clearCurrentMarkers === true) {
+          this._clearCurrentMarkers();
+        }
+        markers.list.forEach(function (marker) {
+          this._addMarkerToMap(marker);
+        }.bind(this));
+      } else {
+        console.error('The provided marker is not valid. It should be like: {"list": [], "clearCurrentMarkers": (optional)}.');
+      }
+    },
+
+    _addMarkerToMap: function (marker) {
+      if (this._isValidMarkerValue(marker)) {
+        var lMarker = L.marker(marker.latlng, marker.options);
+        lMarker.addTo(this.map);
+        this._currentMarkers.push(lMarker);
+      } else {
+        console.error('The provided marker is not valid. It should be like: {"latlng": , "options": (optional)}.',
+          'See https://leafletjs.com/reference-1.3.2.html#marker');
+      }
+    },
+
+    _clearCurrentMarkers: function () {
+      this._currentMarkers.forEach(function (marker) {
+        marker.remove();
+      });
+      this._currentMarkers = [];
+    },
+
+    _isValidMarkersSlotValue: function (markers) {
+      return typeof markers === 'object' && markers.hasOwnProperty('list');
+    },
+
+    _isValidMarkerValue: function (marker) {
+      return typeof marker === 'object' && marker.hasOwnProperty('latlng');
     },
 
     _isValidTaleLayerValue: function (tileLayer) {

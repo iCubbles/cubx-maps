@@ -70,7 +70,15 @@
             "direction": [
               "input"
             ],
-            "description": "JSON object with two properties 'url': string with the url to request the layer and 'options' JSON object containing options for the kayer. See https://leafletjs.com/reference-1.3.2.html#tilelayer"
+            "description": "JSON object with two properties 'url': string with the url to request the layer and 'options'(optional) JSON object containing options for the layer. See https://leafletjs.com/reference-1.3.2.html#tilelayer"
+          },
+          {
+            "slotId": "markers",
+            "type": "array",
+            "direction": [
+              "input"
+            ],
+            "description": "JSON object containing the list of markers and saying if currentMarkers should be removed: {\"list\": [{\"latlng\": array|object, \"options\": object}, ...], \"clearCurrentMarkers\": boolean}. See https://leafletjs.com/reference-1.3.2.html#marker"
           }
         ]
       }
