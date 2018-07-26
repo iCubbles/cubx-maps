@@ -7,7 +7,8 @@
     _currentElements: {
       markers: [],
       circles: [],
-      polygons: []
+      polygons: [],
+      polylines: []
     },
 
     /**
@@ -38,16 +39,6 @@
      * Manipulate an element’s local DOM when the cubbles framework is initialized and ready to work.
      */
     contextReady: function () {
-      /*
-      var polygon = L.polygon([
-        [51.509, -0.08],
-        [51.503, -0.06],
-        [51.51, -0.047]
-      ]).addTo(mymap);
-      marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
-      circle.bindPopup("I am a circle.");
-      polygon.bindPopup("I am a polygon.");
-      */
     },
 
     /**
@@ -90,6 +81,13 @@
       this._addElementsToMap(polygons, 'polygon');
     },
 
+    /**
+     *  Observe the Cubbles-Component-Model: If value for slot 'polylines' has changed ...
+     */
+    modelPolylinesChanged: function (polylines) {
+      this._addElementsToMap(polylines, 'polyline');
+    },
+
     _addElementsToMap: function (elements, type) {
       if (this._isValidMapElementSlotValue(elements, type)) {
         if (elements.hasOwnProperty('clearCurrent') && elements.clearCurrent === true) {
@@ -130,6 +128,7 @@
         case 'marker': return L.marker(element.latlng, element.options);
         case 'circle': return L.circle(element.latlng, element.options);
         case 'polygon': return L.polygon(element.latlngs, element.options);
+        case 'polyline': return L.polyline(element.latlngs, element.options);
         default: return null;
       }
     },
@@ -148,6 +147,7 @@
 
     _isValidElementValue: function (element, type) {
       switch (type) {
+        case 'polyline':
         case 'polygon': return typeof element === 'object' && element.hasOwnProperty('latlngs');
         default: return typeof element === 'object' && element.hasOwnProperty('latlng');
       }
