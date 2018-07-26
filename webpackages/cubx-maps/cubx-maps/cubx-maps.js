@@ -81,13 +81,20 @@
       this._addElementsToMap(markers, 'marker');
     },
 
+    /**
+     *  Observe the Cubbles-Component-Model: If value for slot 'circles' has changed ...
+     */
+    modelCirclesChanged: function (circles) {
+      this._addElementsToMap(circles, 'circle');
+    },
+
     _addElementsToMap: function (elements, type) {
       if (this._isValidMapElementSlotValue(elements, type)) {
         if (elements.hasOwnProperty('clearCurrent') && elements.clearCurrent === true) {
           this._clearElementsOfAType(type);
         }
-        elements.list.forEach(function (marker) {
-          this._addMapElement(marker, type);
+        elements.list.forEach(function (element) {
+          this._addMapElement(element, type);
         }.bind(this));
       } else {
         console.error(
@@ -100,18 +107,27 @@
 
     _addMapElement: function (element, type) {
       if (this._isValidElementValue(element, type)) {
-        var lElement = L.marker(element.latlng, element.options);
-        if (element.hasOwnProperty('popUpInnerHtml') && typeof element.popUpInnerHtml === 'string') {
-          lElement.bindPopup(element.popUpInnerHtml);
+        var lElement = this._createLElementOfAType(type, element);
+        if (lElement) {
+          if (element.hasOwnProperty('popUpInnerHtml') && typeof element.popUpInnerHtml === 'string') {
+            lElement.bindPopup(element.popUpInnerHtml);
+          }
+          lElement.addTo(this.map);
+          this._getListOfElementType(type).push(lElement);
         }
-        lElement.addTo(this.map);
-        this._getListOfElementType(type).push(lElement);
+      } else {
+        console.error(
+          'The provided', type, ' could not be created.',
+          element
+        );
       }
     },
 
-    _createElementOfAType: function (type, element) {
+    _createLElementOfAType: function (type, element) {
       switch (type) {
         case 'marker': return L.marker(element.latlng, element.options);
+        case 'circle': return L.circle(element.latlng, element.options);
+        default: return null;
       }
     },
 
@@ -124,10 +140,7 @@
     },
 
     _isValidMapElementSlotValue: function (elements, type) {
-      switch (type) {
-        case 'marker': return typeof elements === 'object' && elements.hasOwnProperty('list');
-        default: return false;
-      }
+      return typeof elements === 'object' && elements.hasOwnProperty('list');
     },
 
     _isValidElementValue: function (marker) {
