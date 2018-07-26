@@ -35,13 +35,6 @@
      */
     contextReady: function () {
       /*
-      var mymap = L.map(this.$$('#mapDiv')).setView([51.505, -0.09], 13);
-      L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        //attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
-        accessToken: 'your.mapbox.access.token'
-      }).addTo(mymap);
-      var marker = L.marker([51.5, -0.09]).addTo(mymap);
       var circle = L.circle([51.508, -0.11], {
         color: 'red',
         fillColor: '#f03',
@@ -90,21 +83,31 @@
           this._addMarkerToMap(marker);
         }.bind(this));
       } else {
-        console.error('The provided marker is not valid. It should be like: {"list": [], "clearCurrentMarkers": (optional)}.');
+        console.error(
+          'The provided marker is not valid.',
+          'It should be like: {"list": [], "clearCurrentMarkers": (optional)}.',
+          markers
+        );
       }
     },
 
     _addMarkerToMap: function (marker) {
       if (this._isValidMarkerValue(marker)) {
         var lMarker = L.marker(marker.latlng, marker.options);
+        if (marker.hasOwnProperty('popUpInnerHtml') && typeof marker.popUpInnerHtml === 'string') {
+          lMarker.bindPopup(marker.popUpInnerHtml);
+        }
         lMarker.addTo(this.map);
         this._currentMarkers.push(lMarker);
       } else {
-        console.error('The provided marker is not valid. It should be like: {"latlng": , "options": (optional)}.',
-          'See https://leafletjs.com/reference-1.3.2.html#marker');
+        console.error(
+          'The provided marker is not valid.',
+          'It should be like: {"latlng": , "popUpInnerHtml": (optional), "options": (optional)}.',
+          'See https://leafletjs.com/reference-1.3.2.html#marker',
+          marker
+        );
       }
     },
-
     _clearCurrentMarkers: function () {
       this._currentMarkers.forEach(function (marker) {
         marker.remove();
