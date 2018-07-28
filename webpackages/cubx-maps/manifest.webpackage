@@ -115,7 +115,91 @@
         ]
       }
     ],
-    "compoundComponents": [],
+    "compoundComponents": [
+      {
+        "artifactId": "cubx-maps-demo",
+        "description": "Compound component to show the use of RTE 3.0 using cubx-mpas and ajax component",
+        "runnables": [
+          {
+            "name": "demo",
+            "path": "/demo/index.html",
+            "description": "Demo app..."
+          },
+          {
+            "name": "docs",
+            "path": "/docs/index.html",
+            "description": "Show the interface and dataflow of this component."
+          }
+        ],
+        "resources": [
+          "css/cubx-maps-demo.css",
+          "cubx-maps-demo-template.html",
+          "js/hookFunctions.js"
+        ],
+        "dependencies": [
+          {
+            "artifactId": "cubx-maps"
+          },
+          {
+            "webpackageId": "com.incowia.ajax@1.0.0-SNAPSHOT",
+            "artifactId": "ajax-request"
+          }
+        ],
+        "slots": [],
+        "members": [
+          {
+            "memberId": "map",
+            "artifactId": "cubx-maps"
+          },
+          {
+            "memberId": "requester",
+            "artifactId": "ajax-request"
+          }
+        ],
+        "connections": [
+          {
+            "connectionId": "records",
+            "source": {
+              "memberIdRef": "requester",
+              "slot": "result"
+            },
+            "destination": {
+              "memberIdRef": "map",
+              "slot": "markers"
+            },
+            "hookFunction": "window.cubxMapsDemo_auxFunctions.parseResultToMarkers"
+          }
+        ],
+        "inits": [
+          {
+            "slot": "mapInitOptions",
+            "value": {
+              "center": [52.4169221,13.0568619],
+              "zoom": 12
+            },
+            "memberIdRef": "map"
+          },
+          {
+            "slot": "tileLayer",
+            "value": {
+              "url": "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
+              "options": {
+                "attribution": "Map data &copy; &lt;a href=\"https://www.openstreetmap.org/\"&gt;OpenStreetMap&lt;/a&gt; contributors, &lt;a href=\"https://creativecommons.org/licenses/by-sa/2.0/\"&gt;CC-BY-SA&lt;/a&gt;",
+                "maxZoom": 18
+              }
+            },
+            "memberIdRef": "map"
+          },
+          {
+            "slot": "config",
+            "value": {
+              "url": "https://opendata.potsdam.de/api/records/1.0/search/?dataset=kitaboerse-20161108&rows=140"
+            },
+            "memberIdRef": "requester"
+          }
+        ]
+      }
+    ],
     "utilities": []
   }
 }
