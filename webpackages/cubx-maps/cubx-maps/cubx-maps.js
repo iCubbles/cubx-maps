@@ -11,6 +11,7 @@
       polylines: [],
       rectangles: []
     },
+    mapId: 'mapDiv',
 
     /**
      * Manipulate an element’s local DOM when the element is created.
@@ -28,6 +29,7 @@
      * Manipulate an element’s local DOM when the element is attached to the document.
      */
     connected: function () {
+      this.map = L.map(this.$$('#' + this.mapId));
     },
 
     /**
@@ -46,6 +48,7 @@
      *  Observe the Cubbles-Component-Model: If value for slot 'mapInitOptions' has changed ...
      */
     modelMapInitOptionsChanged: function (initOptions) {
+      this._resetMap();
       this.map = L.map(this.$$('#mapDiv'), initOptions);
     },
 
@@ -94,6 +97,13 @@
      */
     modelRectanglesChanged: function (rectangles) {
       this._addElementsToMap(rectangles, 'rectangle');
+    },
+
+    _resetMap: function () {
+      this.removeChild(this.$$('#' + this.mapId));
+      var mapDiv = document.createElement('div');
+      mapDiv.setAttribute('id', this.mapId);
+      this.appendChild(mapDiv);
     },
 
     _addElementsToMap: function (elements, type) {
