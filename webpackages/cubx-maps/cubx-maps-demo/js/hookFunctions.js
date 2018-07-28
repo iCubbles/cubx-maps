@@ -16,7 +16,7 @@
             markers.push(marker);
           }
         }.bind(window.cubxMapsDemo_auxFunctions));
-        next({ list: markers });
+        next({ list: markers, autoFit: true });
       }
     },
 

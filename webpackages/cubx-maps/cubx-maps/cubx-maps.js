@@ -57,9 +57,9 @@
      */
     modelTileLayerChanged: function (tileLayer) {
       if (this._isValidTaleLayerValue(tileLayer)) {
-        L.tileLayer(tileLayer.url, tileLayer.options).addTo(this.map);
+        L.tileLayer(tileLayer.url, tileLayer.leafLetOptions).addTo(this.map);
       } else {
-        console.error('The provided tileLayer is not valid. It should be like: {"url": , "options": (optional)}.',
+        console.error('The provided tileLayer is not valid. It should be like: {"url": , "leafLetOptions": (optional)}.',
           'See https://leafletjs.com/reference-1.3.2.html#tilelayer');
       }
     },
@@ -100,10 +100,7 @@
     },
 
     _resetMap: function () {
-      this.removeChild(this.$$('#' + this.mapId));
-      var mapDiv = document.createElement('div');
-      mapDiv.setAttribute('id', this.mapId);
-      this.appendChild(mapDiv);
+      this.map.remove();
     },
 
     _addElementsToMap: function (elements, type) {
@@ -114,6 +111,9 @@
         elements.list.forEach(function (element) {
           this._addMapElement(element, type);
         }.bind(this));
+        if (elements.hasOwnProperty('autoFit') && elements.autoFit === true) {
+          this.map.fitBounds(this._extractLatLngs(elements.list, type));
+        }
       } else {
         console.error(
           'The provided elements value is not valid.',
@@ -147,6 +147,23 @@
       }
     },
 
+    _extractLatLngs: function (elements, type) {
+      var latLngs = [];
+      switch (type) {
+        case 'polyline':
+        case 'polygon': elements.forEach(function (element) {
+          latLngs.concat(element.latlngs);
+        }); break;
+        case 'rectangle': elements.forEach(function (element) {
+          latLngs.concat(element.bounds);
+        }); break;
+        default: elements.forEach(function (element) {
+          latLngs.push(element.latlng);
+        });
+      }
+      return latLngs;
+    },
+
     _validTypeStringSample: function (type) {
       var prefix;
       switch (type) {
@@ -155,16 +172,16 @@
         case 'rectangle': prefix = '{ "bounds": [[lat, lng], [lat, lng]]'; break;
         default: prefix = '{ "latlng": [lat, lng]';
       }
-      return prefix + ', "options": { "key": value ... }, "popUpInnerHtml": "code" }. "options" and "popUpInnerHtml" are optional.';
+      return prefix + ', "leafLetOptions": { "key": value ... }, "popUpInnerHtml": "code" }. "leafLetOptions" and "popUpInnerHtml" are optional.';
     },
 
     _createLElementOfAType: function (type, element) {
       switch (type) {
-        case 'marker': return L.marker(element.latlng, element.options);
-        case 'circle': return L.circle(element.latlng, element.options);
-        case 'polygon': return L.polygon(element.latlngs, element.options);
-        case 'polyline': return L.polyline(element.latlngs, element.options);
-        case 'rectangle': return L.rectangle(element.bounds, element.options);
+        case 'marker': return L.marker(element.latlng, element.leafLetOptions);
+        case 'circle': return L.circle(element.latlng, element.leafLetOptions);
+        case 'polygon': return L.polygon(element.latlngs, element.leafLetOptions);
+        case 'polyline': return L.polyline(element.latlngs, element.leafLetOptions);
+        case 'rectangle': return L.rectangle(element.bounds, element.leafLetOptions);
         default: return null;
       }
     },

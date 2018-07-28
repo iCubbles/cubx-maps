@@ -70,7 +70,7 @@
             "direction": [
               "input"
             ],
-            "description": "JSON object with two properties 'url': string with the url to request the layer and 'options'(optional) JSON object containing options for the layer. See https://leafletjs.com/reference-1.3.2.html#tilelayer"
+            "description": "JSON object with two properties 'url': string with the url to request the layer and 'leafLetOptions'(optional) JSON object containing options for the layer. See https://leafletjs.com/reference-1.3.2.html#tilelayer"
           },
           {
             "slotId": "markers",
@@ -78,7 +78,7 @@
             "direction": [
               "input"
             ],
-            "description": "JSON object containing the list of markers to be added and saying if current markers should be removed: {\"list\": [{\"latlng\": array|object, \"options\": object, \"popUpInnerHtml\": string}, ...], \"clearCurrent\": boolean}. See https://leafletjs.com/reference-1.3.2.html#marker"
+            "description": "JSON object containing the list of markers to be added and saying if current markers should be removed: {\"list\": [{\"latlng\": array|object, \"leafletOptions\": object, \"popUpInnerHtml\": string}, ...], \"clearCurrent\": boolean, \"autoFit\": boolean}. See https://leafletjs.com/reference-1.3.2.html#marker"
           },
           {
             "slotId": "circles",
@@ -86,7 +86,7 @@
             "direction": [
               "input"
             ],
-            "description": "JSON object containing the list of circles to be added and saying if current circles should be removed: {\"list\": [{\"latlng\": array|object, \"options\": object, \"popUpInnerHtml\": string}, ...], \"clearCurrent\": boolean}. See https://leafletjs.com/reference-1.3.2.html#marker"
+            "description": "JSON object containing the list of circles to be added and saying if current circles should be removed: {\"list\": [{\"latlng\": array|object, \"leafletOptions\": object, \"popUpInnerHtml\": string}, ...], \"clearCurrent\": boolean, \"autoFit\": boolean}. See https://leafletjs.com/reference-1.3.2.html#marker"
           },
           {
             "slotId": "polygons",
@@ -94,7 +94,7 @@
             "direction": [
               "input"
             ],
-            "description": "JSON object containing the list of polygons to be added and saying if current polygons should be removed: {\"list\": [{\"latlngs\": array, \"options\": object, \"popUpInnerHtml\": string}, ...], \"clearCurrent\": boolean}. See https://leafletjs.com/reference-1.3.2.html#marker"
+            "description": "JSON object containing the list of polygons to be added and saying if current polygons should be removed: {\"list\": [{\"latlngs\": array, \"leafletOptions\": object, \"popUpInnerHtml\": string}, ...], \"clearCurrent\": boolean, \"autoFit\": boolean}. See https://leafletjs.com/reference-1.3.2.html#marker"
           },
           {
             "slotId": "polylines",
@@ -102,7 +102,7 @@
             "direction": [
               "input"
             ],
-            "description": "JSON object containing the list of polylines to be added and saying if current polylines should be removed: {\"list\": [{\"latlngs\": array, \"options\": object, \"popUpInnerHtml\": string}, ...], \"clearCurrent\": boolean}. See https://leafletjs.com/reference-1.3.2.html#marker"
+            "description": "JSON object containing the list of polylines to be added and saying if current polylines should be removed: {\"list\": [{\"latlngs\": array, \"leafletOptions\": object, \"popUpInnerHtml\": string}, ...], \"clearCurrent\": boolean, \"autoFit\": boolean}. See https://leafletjs.com/reference-1.3.2.html#marker"
           },
           {
             "slotId": "rectangles",
@@ -110,7 +110,7 @@
             "direction": [
               "input"
             ],
-            "description": "JSON object containing the list of rectangles to be added and saying if current rectangles should be removed: {\"list\": [{\"bounds\": array, \"options\": object, \"popUpInnerHtml\": string}, ...], \"clearCurrent\": boolean}. See https://leafletjs.com/reference-1.3.2.html#marker"
+            "description": "JSON object containing the list of rectangles to be added and saying if current rectangles should be removed: {\"list\": [{\"bounds\": array, \"leafletOptions\": object, \"popUpInnerHtml\": string}, ...], \"clearCurrent\": boolean, \"autoFit\": boolean}. See https://leafletjs.com/reference-1.3.2.html#marker"
           }
         ]
       }
@@ -171,14 +171,6 @@
           }
         ],
         "inits": [
-          {
-            "slot": "mapInitOptions",
-            "value": {
-              "center": [52.4169221,13.0568619],
-              "zoom": 12
-            },
-            "memberIdRef": "map"
-          },
           {
             "slot": "tileLayer",
             "value": {
