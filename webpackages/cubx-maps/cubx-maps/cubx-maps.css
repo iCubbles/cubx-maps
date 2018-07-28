@@ -1,2 +1,5 @@
 /* Place your css here. */
-#mapDiv { height: 180px; }
+#mapDiv {
+    height: inherit;
+    width: inherit;
+}
