@@ -6,7 +6,7 @@
       "dryRun": true
     },
     "release": {
-      "url": "https://cubbles.world/sandbox",
+      "url": "https://cubbles.world/shared",
       "proxy": ""
     }
   }

@@ -133,8 +133,7 @@
         ],
         "resources": [
           "css/cubx-maps-demo.css",
-          "cubx-maps-demo-template.html",
-          "js/hookFunctions.js"
+          "cubx-maps-demo-template.html"
         ],
         "dependencies": [
           {
@@ -143,9 +142,20 @@
           {
             "webpackageId": "com.incowia.ajax@1.0.0-SNAPSHOT",
             "artifactId": "ajax-request"
+          },
+          {
+            "webpackageId": "generic-mapper@2.0.0-SNAPSHOT",
+            "artifactId": "cubx-generic-mapper"
           }
         ],
-        "slots": [],
+        "slots": [
+          {
+            "slotId": "markersMapFunction",
+            "description": "Slot to set the function that will map the result from the request into markers for the map",
+            "type": "string",
+            "direction": [ "input" ]
+          }
+        ],
         "members": [
           {
             "memberId": "map",
@@ -154,20 +164,44 @@
           {
             "memberId": "requester",
             "artifactId": "ajax-request"
+          },
+          {
+            "memberId": "markersMapper",
+            "artifactId": "cubx-generic-mapper"
           }
         ],
         "connections": [
           {
-            "connectionId": "records",
+            "connectionId": "markersMappingFunction",
+            "source": {
+              "slot": "markersMapFunction"
+            },
+            "destination": {
+              "memberIdRef": "markersMapper",
+              "slot": "mapperFunction"
+            }
+          },
+          {
+            "connectionId": "markersMapping",
             "source": {
               "memberIdRef": "requester",
               "slot": "result"
             },
             "destination": {
+              "memberIdRef": "markersMapper",
+              "slot": "inputObject"
+            }
+          },
+          {
+            "connectionId": "markersCon",
+            "source": {
+              "memberIdRef": "markersMapper",
+              "slot": "mappedObject"
+            },
+            "destination": {
               "memberIdRef": "map",
               "slot": "markers"
-            },
-            "hookFunction": "window.cubxMapsDemo_auxFunctions.parseResultToMarkers"
+            }
           }
         ],
         "inits": [
