@@ -49,7 +49,7 @@
      */
     modelMapInitOptionsChanged: function (initOptions) {
       this._resetMap();
-      this.map = L.map(this.$$('#mapDiv'), initOptions);
+      this.map = L.map(this._getMapHtmlElement(), initOptions);
     },
 
     /**
@@ -97,6 +97,32 @@
      */
     modelRectanglesChanged: function (rectangles) {
       this._addElementsToMap(rectangles, 'rectangle');
+    },
+
+    /**
+     *  Observe the Cubbles-Component-Model: If value for slot 'mapWidth' has changed ...
+     */
+    modelMapWidthChanged: function (mapWidth) {
+      this._adjustMapWidth(mapWidth);
+    },
+
+    /**
+     *  Observe the Cubbles-Component-Model: If value for slot 'mapHeight' has changed ...
+     */
+    modelMapHeightChanged: function (mapHeight) {
+      this._adjustMapHeight(mapHeight);
+    },
+
+    _getMapHtmlElement: function () {
+      return this.$$('#mapDiv');
+    },
+
+    _adjustMapWidth: function (mapWidth) {
+      this._getMapHtmlElement().style.width = mapWidth;
+    },
+
+    _adjustMapHeight: function (mapHeight) {
+      this._getMapHtmlElement().style.height = mapHeight;
     },
 
     _resetMap: function () {
