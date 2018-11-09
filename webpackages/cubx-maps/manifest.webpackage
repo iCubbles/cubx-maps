@@ -118,7 +118,8 @@
             "direction": [
               "input"
             ],
-            "description": "Width for the displayed map. It should be css valid (e.g. 400px, 30em, 30%, 100vw, 100vh)"
+            "description": "Width for the displayed map. It should be css valid (e.g. 400px, 30em, 30%, 100vw, 100vh)",
+            "value": "auto"
           },
           {
             "slotId": "mapHeight",
@@ -126,7 +127,8 @@
             "direction": [
               "input"
             ],
-            "description": "Width for the displayed map. It should be css valid (e.g. 400px, 30em, 30%, 100vw, 100vh)"
+            "description": "Width for the displayed map. It should be css valid (e.g. 400px, 30em, 30%, 100vw, 100vh)",
+            "value": "400px"
           }
         ]
       }

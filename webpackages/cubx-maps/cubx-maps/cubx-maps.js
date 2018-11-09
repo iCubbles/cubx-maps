@@ -42,6 +42,7 @@
      * Manipulate an element’s local DOM when the cubbles framework is initialized and ready to work.
      */
     contextReady: function () {
+      this._adjustInitialSize();
     },
 
     /**
@@ -111,6 +112,15 @@
      */
     modelMapHeightChanged: function (mapHeight) {
       this._adjustMapHeight(mapHeight);
+    },
+
+    _adjustInitialSize: function () {
+      if (this.getMapWidth()) {
+        this._adjustMapWidth(this.getMapWidth());
+      }
+      if (this.getMapHeight()) {
+        this._adjustMapHeight(this.getMapHeight());
+      }
     },
 
     _getMapHtmlElement: function () {
