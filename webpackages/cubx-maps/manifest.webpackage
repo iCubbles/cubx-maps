@@ -150,6 +150,7 @@
           }
         ],
         "resources": [
+          "js/markersMapFunction.js",
           "css/cubx-maps-demo.css",
           "cubx-maps-demo-template.html"
         ],
@@ -276,6 +277,10 @@
               "url": "https://opendata.potsdam.de/api/records/1.0/search/?dataset=kitaboerse-20161108&rows=140"
             },
             "memberIdRef": "requester"
+          },
+          {
+            "slot": "markersMapFunction",
+            "value": "window.cubx_maps_demo_markersMapFunction"
           }
         ]
       }
