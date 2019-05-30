@@ -1,9 +1,12 @@
+import css from './element.sss'
+
 /* globals CubxComponent, L */
 (function () {
   'use strict';
 
   CubxComponent({
-    is: 'cubx-maps',
+    is: '/* @echo elementName */',
+
     _currentElements: {
       markers: [],
       circles: [],
@@ -29,6 +32,7 @@
      * Manipulate an element’s local DOM when the element is attached to the document.
      */
     connected: function () {
+      this.map = L.map(this.$$('#' + this.mapId));
     },
 
     /**
@@ -41,7 +45,6 @@
      * Manipulate an element’s local DOM when the cubbles framework is initialized and ready to work.
      */
     contextReady: function () {
-      this.map = L.map(this.$$('#' + this.mapId));
       this._adjustInitialSize();
     },
 
@@ -252,3 +255,4 @@
     }
   });
 }());
+

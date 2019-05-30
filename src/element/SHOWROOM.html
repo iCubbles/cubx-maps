@@ -1,0 +1,77 @@
+<!--
+    This is your showcase.
+    Just use it to
+    * demonstrate elements of your webpackage,
+    * evaluate the integration with elements of other webpackages,
+    * test the integration with the dom-api.
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title><%= elementName %></title>
+    <script src="../../cubx.core.rte@3.0.0/webcomponents/custom-elements-es5-adapter.js"></script>
+    <script src="../../cubx.core.rte@3.0.0/webcomponents/webcomponents-lite.js"></script>
+    <script src="../../cubx.core.rte@3.0.0/crc-loader/js/main.js" data-crcinit-loadcif="true"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <h1><%= elementName %></h1>
+        </div>
+        <hr>
+        <div>
+            <h2>With default slot values</h2>
+            <<%= elementName %> cubx-webpackage-id="this">
+                <cubx-core-init style="display: none">
+                    <cubx-core-slot-init slot="mapInitOptions">{"center": [51.505, -0.09], "zoom": 13}</cubx-core-slot-init>
+                    <cubx-core-slot-init slot="tileLayer">
+                        {
+                            "url": "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                            "leafLetOptions": {
+                                "attribution": "Map data &copy; &lt;a href=\"https://www.openstreetmap.org/\"&gt;OpenStreetMap&lt;/a&gt; contributors, &lt;a href=\"https://creativecommons.org/licenses/by-sa/2.0/\"&gt;CC-BY-SA&lt;/a&gt;",
+                                "maxZoom": 18
+                            }
+                        }
+                    </cubx-core-slot-init>
+                    <cubx-core-slot-init slot="markers">{
+                            "list": [
+                                {"latlng": [51.5, -0.09], "popUpInnerHtml": "&lt;b&gt;Fixed&lt;/b&gt; Marker", "leafLetOptions": {"title": "Fixed Marker"}},
+                                {"latlng": [51.51, -0.091], "leafLetOptions": {"title": "Draggable Marker", "draggable": true}}
+                            ]
+                        }
+                    </cubx-core-slot-init>
+                    <cubx-core-slot-init slot="circles">{
+                            "list": [
+                                {"latlng": [51.508, -0.11], "popUpInnerHtml": "Red &lt;b&gt;circle&lt;/b&gt;", "leafLetOptions": { "color": "red", "fillColor": "#f03", "fillOpacity": 0.5, "radius": 500 }}
+                            ]
+                        }
+                    </cubx-core-slot-init>
+                    <cubx-core-slot-init slot="polygons">{
+                            "list": [
+                                {"latlngs": [ [51.509, -0.08], [51.503, -0.06], [51.51, -0.047] ], "popUpInnerHtml": "A &lt;b&gt;polygon&lt;/b&gt;"}
+                            ]
+                        }
+                    </cubx-core-slot-init>
+                    <cubx-core-slot-init slot="polylines">{
+                            "list": [
+                                {"latlngs": [ [51.5, -0.09], [51.51, -0.091] ], "popUpInnerHtml": "A &lt;b&gt;polyline&lt;/b&gt;"}
+                            ]
+                        }
+                    </cubx-core-slot-init>
+                    <cubx-core-slot-init slot="rectangles">{
+                            "list": [
+                                {"bounds": [ [51.505, -0.13], [51.498, -0.14] ], "popUpInnerHtml": "A &lt;b&gt;rectangle&lt;/b&gt;", "leafLetOptions": { "color": "#ff7800", "weight": 1 }}
+                            ]
+                        }
+                    </cubx-core-slot-init>
+                </cubx-core-init>
+            </<%= elementName %>>
+        </div>
+    </div>
+</body>
+
+</html>
