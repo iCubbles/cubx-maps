@@ -64,14 +64,24 @@ const config = {
           }
       }),
     new HtmlWebpackPlugin({
-        template: 'SHOWROOM.html',
-        filename: 'SHOWROOM.html',
-            // manage placeholders
+      template: 'SHOWROOM.html',
+      filename: 'SHOWROOM.html',
+          // manage placeholders
+      templateParameters: {
+          webpackageName: webpackageName,
+          elementName: elementName
+        }
+    }),
+    new HtmlWebpackPlugin({
+        template: 'DOCS.html',
+        inject: 'body',
+        filename: 'DOCS.html',
+        // manage placeholders
         templateParameters: {
-            webpackageName: `${webpackageName}`,
-            elementName: `${elementName}`
-          }
-      }),
+            elementName: elementName,
+            webpackageName: webpackageName
+        },
+    }),
     new BundleAnalyzerPlugin({
         analyzerMode: 'static',
         reportFilename: 'bundleReport.html',
