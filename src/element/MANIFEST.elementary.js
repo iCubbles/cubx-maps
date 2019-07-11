@@ -34,49 +34,49 @@ module.exports = webpackageName => {
         type: "object",
         direction: ["input"],
         description:
-          "JSON object containing initial options for the map. See: https://leafletjs.com/reference-1.3.2.html#map"
+          "JSON object containing initial options for the map. See: https://leafletjs.com/reference-1.0.3.html#map"
       },
       {
         slotId: "tileLayer",
         type: "object",
         direction: ["input"],
         description:
-          "JSON object with two properties 'url': string with the url to request the layer and 'leafLetOptions'(optional) JSON object containing options for the layer. See https://leafletjs.com/reference-1.3.2.html#tilelayer"
+          "JSON object with two properties 'url': string with the url to request the layer and 'leafLetOptions'(optional) JSON object containing options for the layer. See https://leafletjs.com/reference-1.0.3.html#tilelayer"
       },
       {
         slotId: "markers",
         type: "object",
         direction: ["input"],
         description:
-          'JSON object containing the list of markers to be added and saying if current markers should be removed: {"list": [{"latlng": array|object, "leafletOptions": object, "popUpInnerHtml": string}, ...], "clearCurrent": boolean, "autoFit": boolean}. See https://leafletjs.com/reference-1.3.2.html#marker'
+          'JSON object containing the list of markers to be added and saying if current markers should be removed: {"list": [{"latlng": array|object, "leafletOptions": object, "popUpInnerHtml": string}, ...], "clearCurrent": boolean, "autoFit": boolean}. See https://leafletjs.com/reference-1.0.3.html#marker'
       },
       {
         slotId: "circles",
         type: "object",
         direction: ["input"],
         description:
-          'JSON object containing the list of circles to be added and saying if current circles should be removed: {"list": [{"latlng": array|object, "leafletOptions": object, "popUpInnerHtml": string}, ...], "clearCurrent": boolean, "autoFit": boolean}. See https://leafletjs.com/reference-1.3.2.html#marker'
+          'JSON object containing the list of circles to be added and saying if current circles should be removed: {"list": [{"latlng": array|object, "leafletOptions": object, "popUpInnerHtml": string}, ...], "clearCurrent": boolean, "autoFit": boolean}. See https://leafletjs.com/reference-1.0.3.html#circle'
       },
       {
         slotId: "polygons",
         type: "object",
         direction: ["input"],
         description:
-          'JSON object containing the list of polygons to be added and saying if current polygons should be removed: {"list": [{"latlngs": array, "leafletOptions": object, "popUpInnerHtml": string}, ...], "clearCurrent": boolean, "autoFit": boolean}. See https://leafletjs.com/reference-1.3.2.html#marker'
+          'JSON object containing the list of polygons to be added and saying if current polygons should be removed: {"list": [{"latlngs": array, "leafletOptions": object, "popUpInnerHtml": string}, ...], "clearCurrent": boolean, "autoFit": boolean}. See https://leafletjs.com/reference-1.0.3.html#polygon'
       },
       {
         slotId: "polylines",
         type: "object",
         direction: ["input"],
         description:
-          'JSON object containing the list of polylines to be added and saying if current polylines should be removed: {"list": [{"latlngs": array, "leafletOptions": object, "popUpInnerHtml": string}, ...], "clearCurrent": boolean, "autoFit": boolean}. See https://leafletjs.com/reference-1.3.2.html#marker'
+          'JSON object containing the list of polylines to be added and saying if current polylines should be removed: {"list": [{"latlngs": array, "leafletOptions": object, "popUpInnerHtml": string}, ...], "clearCurrent": boolean, "autoFit": boolean}. See https://leafletjs.com/reference-1.0.3.html#polyline'
       },
       {
         slotId: "rectangles",
         type: "object",
         direction: ["input"],
         description:
-          'JSON object containing the list of rectangles to be added and saying if current rectangles should be removed: {"list": [{"bounds": array, "leafletOptions": object, "popUpInnerHtml": string}, ...], "clearCurrent": boolean, "autoFit": boolean}. See https://leafletjs.com/reference-1.3.2.html#marker'
+          'JSON object containing the list of rectangles to be added and saying if current rectangles should be removed: {"list": [{"bounds": array, "leafletOptions": object, "popUpInnerHtml": string}, ...], "clearCurrent": boolean, "autoFit": boolean}. See https://leafletjs.com/reference-1.0.3.html#rectangle'
       },
       {
         slotId: "mapWidth",
