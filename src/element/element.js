@@ -32,7 +32,11 @@ import css from './element.sss'
      * Manipulate an element’s local DOM when the element is attached to the document.
      */
     connected: function () {
-      this._initMap();
+      try {
+        this._initMap();
+      } catch (e) {
+        console.log('Leaflet was not ready to start', e);
+      }
     },
 
     /**
@@ -52,7 +56,9 @@ import css from './element.sss'
      *  Observe the Cubbles-Component-Model: If value for slot 'mapInitOptions' has changed ...
      */
     modelMapInitOptionsChanged: function (initOptions) {
-      this._resetMap();
+      if (this.map) {
+        this._resetMap();
+      }
       this._initMap(initOptions);
     },
 
