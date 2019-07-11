@@ -24,8 +24,8 @@ module.exports = webpackageName => {
         artifactId: "cubxcomponent"
       },
       {
-        webpackageId: "leaflet-1-5-1@1.0.0-SNAPSHOT",
-        artifactId: "leaflet-1-5-1-util"
+        webpackageId: "leaflet-1-0-3@1.0.0-SNAPSHOT",
+        artifactId: "leaflet-1-0-3-util"
       }
     ],
     slots: [
@@ -93,6 +93,12 @@ module.exports = webpackageName => {
         description:
           "Width for the displayed map. It should be css valid (e.g. 400px, 30em, 30%, 100vw, 100vh)",
         value: "400px"
+      },
+      {
+        slotId: "selectedElement",
+        type: "object",
+        direction: ["output"],
+        description: "Currently selected (clicked) element. It is a JSON object like {element: the element as provided through an input slot, type: 'marker'|'circle|'rectangle'|'polygon'|'polyline'}; e.g., { element: { latlng: [ 51.5, -0.09 ], leafLetOptions: { title: 'Fixed Marker' } }, type: 'marker' }"
       }
     ]
   };

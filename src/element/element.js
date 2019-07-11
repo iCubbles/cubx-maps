@@ -32,7 +32,7 @@ import css from './element.sss'
      * Manipulate an element’s local DOM when the element is attached to the document.
      */
     connected: function () {
-      this.map = L.map(this.$$('#' + this.mapId));
+      this._initMap();
     },
 
     /**
@@ -53,7 +53,14 @@ import css from './element.sss'
      */
     modelMapInitOptionsChanged: function (initOptions) {
       this._resetMap();
-      this.map = L.map(this._getMapHtmlElement(), initOptions);
+      this._initMap(initOptions);
+    },
+
+    _initMap: function (initOptions) {
+      this.map = L.map(this._getMapHtmlElement(), initOptions || {});
+      this.map.on('click', function() {
+        this.setSelectedElement(undefined);
+      }.bind(this));
     },
 
     /**
@@ -127,7 +134,7 @@ import css from './element.sss'
     },
 
     _getMapHtmlElement: function () {
-      return this.$$('#mapDiv');
+      return this.$$(`#${this.mapId}`);
     },
 
     _adjustMapWidth: function (mapWidth) {
@@ -170,6 +177,9 @@ import css from './element.sss'
             lElement.bindPopup(element.popUpInnerHtml);
           }
           lElement.addTo(this.map);
+          lElement.on('click', function() {
+            this.setSelectedElement({ element: element, type: type });
+          }.bind(this));
           this._getListOfElementType(type).push(lElement);
         } else {
           console.error(
